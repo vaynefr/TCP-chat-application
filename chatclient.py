@@ -26,8 +26,8 @@ def connect_to_server(name):
         client.connect((HOST_ADDR, HOST_PORT)) 
         client.send(name.encode("utf-8")) # sends username to the server
 
-        entName.config(state=tk.DISABLED)
-        connectButton.config(state=tk.DISABLED)
+        entName.configure(state=tk.DISABLED)
+        connectButton.configure(state=tk.DISABLED)
         tkMessage.config(state=tk.NORMAL)
 
         #start thread to receive messages from server
@@ -79,28 +79,28 @@ def send_message_to_server(msg):
 
 
 
-topFrame = customtkinter.CTkFrame(window)
-nameLabel = tk.Label(topFrame, text="User Name:").pack(side=tk.LEFT)
+topFrame = tk.Frame(window)
+nameLabel = customtkinter.CTkLabel(topFrame, text="User Name:",fg_color="black").pack(side=tk.LEFT)
 entName = tk.Entry(topFrame)
 entName.pack(side=tk.LEFT)
 connectButton = customtkinter.CTkButton(topFrame, text="Connect to chat", command=connect)
 connectButton.pack(side=tk.LEFT)
 topFrame.pack(side=tk.TOP)
 
-displayFrame = customtkinter.CTkFrame(window)
-headingLine = tk.Label(displayFrame, text="*********************").pack()
-scrollBar = tk.Scrollbar(displayFrame)
+displayFrame = tk.Frame(window)
+headingLine = customtkinter.CTkLabel(displayFrame, text="*********************",fg_color="black").pack()
+scrollBar = customtkinter.CTkScrollbar(displayFrame)
 scrollBar.pack(side=tk.RIGHT, fill=tk.Y)
 tkDisplay = tk.Text(displayFrame, height=20, width=55)
 tkDisplay.pack(side=tk.LEFT, fill=tk.Y, padx=(5,0))
-scrollBar.config(command=tkDisplay.yview)
-tkDisplay.config(yscrollcommand=scrollBar.set, background="#FFFFFF", highlightbackground="white", state="disabled")
+scrollBar.configure(command=tkDisplay.yview)
+tkDisplay.config(yscrollcommand=scrollBar.set, background="#FFFFFF", highlightbackground="black", state="disabled")
 displayFrame.pack(side=tk.TOP)
 
-bottomFrame = customtkinter.CTkFrame(window)
+bottomFrame = tk.Frame(window)
 tkMessage = tk.Text(bottomFrame, height=2, width=55)
 tkMessage.pack(side=tk.LEFT, padx=(5, 13), pady=(5, 10))
-tkMessage.config(highlightbackground="white", state="disabled")
+tkMessage.config(highlightbackground="black", state="disabled")
 tkMessage.bind("<Return>", (lambda event: getChatMessage(tkMessage.get("1.0", tk.END))))
 bottomFrame.pack(side=tk.BOTTOM)
 

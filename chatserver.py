@@ -19,7 +19,7 @@ def send_recv_client_msg(client_connection, client_ip_addr):
     client_name = client_connection.recv(4096)
     client_name = client_name.decode("utf-8")
     print(type(client_name))
-    welcome_message = "Hello" + client_name + ". Use 'exit' to quit"
+    welcome_message = "Hello " + client_name + ". Use 'exit' to quit"
     client_connection.send(welcome_message.encode("utf-8"))
     client_names.append(client_name)
 
@@ -55,7 +55,7 @@ def get_client_index(client_list, curr_client):
     return -1 
 
 def update_client_names_display(name_list):
-    tkDisplay.config(state=tk.NORMAL)
+    tkDisplay.configure(state=tk.NORMAL)
     tkDisplay.delete('1.0', tk.END)
     for client in name_list:
         tkDisplay.insert(tk.END, client+"\n")
@@ -71,8 +71,8 @@ def accept_clients(some_server):
         threading._start_new_thread(send_recv_client_msg, (client,addr),)
 
 def start_server():
-    startButton.config(state=tk.DISABLED)
-    stopButton.config(state=tk.NORMAL)
+    startButton.configure(state=tk.DISABLED)
+    stopButton.configure(state=tk.NORMAL)
     
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -88,8 +88,8 @@ def start_server():
 
 
 def stop_server():
-    stopButton.config(state=tk.DISABLED)
-    startButton.config(state=tk.NORMAL)
+    stopButton.configure(state=tk.DISABLED)
+    startButton.configure(state=tk.NORMAL)
 
 customtkinter.set_appearance_mode("dark")
 
@@ -103,23 +103,23 @@ stopButton = customtkinter.CTkButton(topFrame, text="Stop Service", command=stop
 stopButton.pack()
 topFrame.pack(side=tk.TOP, pady=(5,0))
 
-# center frame displays host and port number of server 
+# center frame displays host and p  ort number of server 
 centerFrame = tk.Frame(window)
-hostLabel = tk.Label(centerFrame, text="Host: X.X.X.X")
+hostLabel = tk.Label(centerFrame, text="Host: X.X.X.X",foreground="black")
 hostLabel.pack(side=tk.LEFT)
-portLabel = tk.Label(centerFrame, text="Port: XXXX")
+portLabel = tk.Label(centerFrame, text="Port: XXXX",foreground="black")
 portLabel.pack()
 centerFrame.pack(side=tk.TOP, pady=(5,0))
 
 clientsFrame = tk.Frame(window)
 clientsLabel = tk.Label(clientsFrame, text="*****CONNECTED USERS******")
-scrollBar = tk.Scrollbar(clientsFrame)
+scrollBar = customtkinter.CTkScrollbar(clientsFrame)
 scrollBar.pack(side=tk.RIGHT, fill=tk.Y)
 tkDisplay = tk.Text(clientsFrame, height=15, width=40)
 tkDisplay.pack(side=tk.LEFT, fill=tk.Y, padx=(5,0))
 
 #tkDisplay.insert(tk.END, "User 1\n")
-scrollBar.config(command=tkDisplay.yview)
+scrollBar.configure(command=tkDisplay.yview)
 tkDisplay.config(yscrollcommand=scrollBar.set, background="#F4F6F7", highlightbackground="grey", state="disabled")
 clientsFrame.pack(side=tk.BOTTOM, pady=(5, 10))
 
